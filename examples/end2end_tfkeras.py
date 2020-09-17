@@ -15,12 +15,10 @@ from tensorflow import keras
 from tensorflow.keras import layers, Input
 from tensorflow.python.saved_model import tag_constants
 from tensorflow.python.tools import freeze_graph
-from tf2onnx.tf_loader import tf_reset_default_graph, tf_session, freeze_session
 
 ########################################
 # Creates the model.
 model = keras.Sequential()
-#model.add(layers.Embedding(input_dim=10, output_dim=4))
 model.add(Input((4, 4)))
 model.add(layers.SimpleRNN(8))
 model.add(layers.Dense(2))
@@ -74,13 +72,13 @@ print('ort:', timeit.timeit("session.run(None, {'input_1:0': input})",
                             number=100, globals=globals()))
 
 ########################################
-# Freezes the graph with tensorflow.lite
+# Freezes the graph with tensorflow.lite.
 converter = tf.lite.TFLiteConverter.from_saved_model("simple_rnn")
 tflite_model = converter.convert()
 with open("simple_rnn.tflite", "wb") as f:
     f.write(tflite_model)
 
-# Builds an interpreter
+# Builds an interpreter.
 interpreter = tf.lite.Interpreter(model_path='simple_rnn.tflite')
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
