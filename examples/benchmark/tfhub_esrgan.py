@@ -7,7 +7,7 @@ url = "https://tfhub.dev/captain-pool/esrgan-tf2/1?tf-hub-format=compressed"
 dest = "tf-esrgan-tf2"
 name = "esrgan-tf2"
 opset = 13
-onnx_name = os.path.join(dest, "esrgan-tf2-%d.onnx" % opset)
+onnx_name = os.path.join(dest, "%s-%d.onnx" % (name, opset))
 
 imgs = generate_random_images()
 
