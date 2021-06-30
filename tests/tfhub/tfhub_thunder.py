@@ -16,4 +16,5 @@ def main(opset=13):
               signature='serving_default')
 
 
-main()
+if __name__ == "__main__":
+    main()
